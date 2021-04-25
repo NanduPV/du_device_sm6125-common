@@ -88,22 +88,22 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.feature.wsa.enable=false \
     vendor.audio.feature.audiozoom.enable=false \
     vendor.audio.feature.snd_mon.enable=true
-    
-# Speaker clarity hack
-PRODUCT_PROPERTY_OVERRIDES += \
-   vendor.audio.feature.spkr_prot.enable=false
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.config.media_vol_steps=25 \
     ro.config.vc_call_vol_steps=7 \
     vendor.audio.adm.buffering.ms=6
+    
+# Speaker clarity hack
+PRODUCT_PROPERTY_OVERRIDES += \
+   vendor.audio.feature.spkr_prot.enable=false
 
+# Bluetooth
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     persist.bluetooth.a2dp_offload.disabled=false \
     ro.bluetooth.a2dp_offload.supported=true \
     vendor.audio.feature.a2dp_offload.enable=true
 
-# Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.qcom.bluetooth.soc=cherokee
 

@@ -24,9 +24,9 @@ VENDOR=xiaomi
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
-RR_ROOT="$MY_DIR"/../../..
+DU_ROOT="$MY_DIR"/../../..
 
-HELPER="$RR_ROOT"/vendor/rr/build/tools/extract_utils.sh
+HELPER="$DU_ROOT"/vendor/du/build/tools/extract_utils.sh
 if [ ! -f "$HELPER" ]; then
     echo "Unable to find helper script at $HELPER"
     exit 1
@@ -61,10 +61,6 @@ fi
 
 function blob_fixup() {
     case "${1}" in
-
-    vendor/lib/hw/camera.trinket.so)
-        sed -i "s/libui.so/libuq.so/g" "${2}"
-        ;;
     
     vendor/bin/mlipayd@1.1)
         patchelf --remove-needed vendor.xiaomi.hardware.mtdservice@1.0.so "${2}"
@@ -78,21 +74,21 @@ function blob_fixup() {
 }
 
 # Initialize the common helper
-setup_vendor "$DEVICE_COMMON" "$VENDOR" "$RR_ROOT" true $CLEAN_VENDOR
+setup_vendor "$DEVICE_COMMON" "$VENDOR" "$DU_ROOT" true $CLEAN_VENDOR
 
 extract "$MY_DIR"/proprietary-files.txt "$SRC" \
     "${KANG}" --section "${SECTION}"
 
 if [ -s "$MY_DIR"/../$DEVICE_SPECIFIED_COMMON/proprietary-files.txt ];then
     # Reinitialize the helper for device specified common
-    setup_vendor "$DEVICE_SPECIFIED_COMMON" "$VENDOR" "$RR_ROOT" false "$CLEAN_VENDOR"
+    setup_vendor "$DEVICE_SPECIFIED_COMMON" "$VENDOR" "$DU_ROOT" false "$CLEAN_VENDOR"
     extract "$MY_DIR"/../$DEVICE_SPECIFIED_COMMON/proprietary-files.txt "$SRC" \
     "${KANG}" --section "${SECTION}"
 fi
 
 if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
     # Reinitialize the helper for device
-    setup_vendor "$DEVICE" "$VENDOR" "$RR_ROOT" false "$CLEAN_VENDOR"
+    setup_vendor "$DEVICE" "$VENDOR" "$DU_ROOT" false "$CLEAN_VENDOR"
     extract "$MY_DIR"/../$DEVICE/proprietary-files.txt "$SRC" \
     "${KANG}" --section "${SECTION}"
 fi

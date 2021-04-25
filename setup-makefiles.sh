@@ -26,9 +26,9 @@ INITIAL_COPYRIGHT_YEAR=2020
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
 
-RR_ROOT="$MY_DIR"/../../..
+DU_ROOT="$MY_DIR"/../../..
 
-HELPER="$RR_ROOT"/vendor/rr/build/tools/extract_utils.sh
+HELPER="$DU_ROOT"/vendor/du/build/tools/extract_utils.sh
 if [ ! -f "$HELPER" ]; then
     echo "Unable to find helper script at $HELPER"
     exit 1
@@ -36,7 +36,7 @@ fi
 . "$HELPER"
 
 # Initialize the common helper
-setup_vendor "$DEVICE_COMMON" "$VENDOR" "$RR_ROOT" true
+setup_vendor "$DEVICE_COMMON" "$VENDOR" "$DU_ROOT" true
 
 # Copyright headers and guards
 write_headers "laurel_sprout ginkgo laurus"
@@ -51,7 +51,7 @@ if [ -s "$MY_DIR"/../$DEVICE_SPECIFIED_COMMON/proprietary-files.txt ]; then
 
     # Reinitialize the helper for device specified common
     INITIAL_COPYRIGHT_YEAR="$DEVICE_BRINGUP_YEAR"
-    setup_vendor "$DEVICE_SPECIFIED_COMMON" "$VENDOR" "$RR_ROOT" true
+    setup_vendor "$DEVICE_SPECIFIED_COMMON" "$VENDOR" "$DU_ROOT" true
 
     # Copyright headers and guards
     write_headers "$DEVICE_SPECIFIED_COMMON_DEVICE"
@@ -68,7 +68,7 @@ fi
 if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
     # Reinitialize the helper for device
     INITIAL_COPYRIGHT_YEAR="$DEVICE_BRINGUP_YEAR"
-    setup_vendor "$DEVICE" "$VENDOR" "$RR_ROOT" false
+    setup_vendor "$DEVICE" "$VENDOR" "$DU_ROOT" false
 
     # Copyright headers and guards
     write_headers

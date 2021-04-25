@@ -53,19 +53,25 @@ TARGET_USES_64_BIT_BINDER := true
 
 # Kernel
 BOARD_BOOT_HEADER_VERSION := 2
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0x4a90000 androidboot.hardware=qcom msm_rtb.filter=0x237 lpm_levels.sleep_disabled=1 service_locator.enable=1 swiotlb=1 androidboot.configfs=true androidboot.usbcontroller=4e00000.dwc3
-BOARD_KERNEL_CMDLINE += loop.max_part=7
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0x4a90000 androidboot.hardware=qcom msm_rtb.filter=0x237 lpm_levels.sleep_disabled=1 service_locator.enable=1 swiotlb=1 androidboot.configfs=true androidboot.usbcontroller=4e00000.dwc3 loop.max_part=7
+BOARD_KERNEL_CMDLINE += kpti=off androidboot.init_fatal_reboot_target=recovery
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET     := 0x01000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-BOARD_KERNEL_SEPARATED_DTBO := true
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_VERSION := 4.14
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_SOURCE := kernel/xiaomi/laurel_sprout
+TARGET_KERNEL_HEADERS := kernel/xiaomi/laurel_sprout
 TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_CONFIG := vendor/laurel_sprout_defconfig
+TARGET_KERNEL_SOURCE := kernel/xiaomi/laurel_sprout
+BOARD_KERNEL_SEPARATED_DTBO := true
+
+# Fenix Kernel
+#TARGET_KERNEL_CONFIG := vendor/laurel_sprout-fenix_defconfig
 
 # Proton Clang
 #TARGET_KERNEL_CLANG_COMPILE := true
@@ -77,6 +83,7 @@ TARGET_KERNEL_CLANG_COMPILE := true
 
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
+OVERRIDE_QCOM_HARDWARE_VARIANT := sm8150
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
@@ -105,6 +112,7 @@ TARGET_NEEDS_RAW10_BUFFER_FIX := true
 # Charger configs
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
+TARGET_PIXEL_CHARGE_ANIM := true
 
 # Enable real time lockscreen charging current values
 BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO

@@ -27,12 +27,10 @@ $(call inherit-product, $(LOCAL_PATH)/properties.mk)
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
-    $(LOCAL_PATH)/overlay-lineage \
     $(LOCAL_PATH)/overlay-system
 
 PRODUCT_ENFORCE_RRO_TARGETS := *
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
-    $(LOCAL_PATH)/overlay-lineage/lineage-sdk \
     $(LOCAL_PATH)/overlay-system
 
 # Dex
@@ -44,6 +42,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Soong namespaces
 QCOM_SOONG_NAMESPACE := $(LOCAL_PATH)
 
+# Charging
+PRODUCT_PACKAGES += \
+    charger_res_images \
+    product_charger_res_images    
+    
+# LiveDisplay
+PRODUCT_PACKAGES += \
+    vendor.lineage.livedisplay@2.0-service-sdm \
+    vendor.lineage.livedisplay@2.0-service-sysfs
+    
 # Permissions
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
@@ -143,6 +151,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     external/ant-wireless/antradio-library/com.dsi.ant.antradio_library.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.dsi.ant.antradio_library.xml
 
+# MliPay    
 PRODUCT_PACKAGES += \
     org.ifaa.android.manager
 
@@ -303,10 +312,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.xiaomi_trinket
 
-# LiveDisplay native
-PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-service-sdm
-
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
@@ -422,10 +427,6 @@ PRODUCT_PACKAGES += \
     android.hardware.thermal@1.0-impl \
     android.hardware.thermal@1.0-service \
     thermal.trinket
-
-# Trust
-PRODUCT_PACKAGES += \
-    vendor.lineage.trust@1.0-service
 
 # USB
 PRODUCT_PACKAGES += \
